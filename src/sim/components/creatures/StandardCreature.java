@@ -47,4 +47,14 @@ public class StandardCreature implements Creature {
     public double getHealth() {
         return this.health;
     }
+
+    @Override
+    public double getX() {
+        return this.pos.getX();
+    }
+
+    @Override
+    public double getY() {
+        return this.pos.getY();
+    }
 }
