@@ -1,6 +1,8 @@
 package sim.components;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+import sim.utils.QuadTree;
 import sim.utils.SimulationParameters;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.stream.Collectors;
 public class Simulation {
     private List<Creature> creatures;
     private SimulationParameters simulationParameters;
+    private QuadTree quadTree;
 
     public Simulation(SimulationParameters simulationParameters) {
         this.simulationParameters = simulationParameters;
@@ -26,11 +29,16 @@ public class Simulation {
 
     public void update() {
         // remove if
+        this.quadTree = new QuadTree(new Rectangle2D(0, 0,
+                this.simulationParameters.getCanvas().getWidth(),
+                this.simulationParameters.getCanvas().getHeight()));
 
-        this.creatures = this.creatures.stream()
+        for (Creature creature : this.creatures = this.creatures.stream()
                 .map(creature -> creature.update(this.simulationParameters.getCanvas()))
                 .filter(creature -> creature.getHealth() >= 0)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())) {
+            this.quadTree.insert(creature);
+        }
         // from our new set of creatures: check if they can reproduce
     }
 
