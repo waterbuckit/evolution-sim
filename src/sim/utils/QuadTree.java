@@ -23,7 +23,7 @@ public class QuadTree {
 
     private void subdivide(){
         this.northWest = new QuadTree(new Rectangle2D(this.bound.getMinX(),this.bound.getMinY(),
-                this.bound.getWidth()/2, this.bound.getHeight()/1));
+                this.bound.getWidth()/2, this.bound.getHeight()/2));
         this.northEast = new QuadTree(new Rectangle2D(this.bound.getMinX() + this.bound.getWidth()/2, this.bound.getMinY(),
                 this.bound.getWidth()/2, this.bound.getHeight()/2));
         this.southWest = new QuadTree(new Rectangle2D(this.bound.getMinX(),
@@ -34,7 +34,8 @@ public class QuadTree {
                 this.bound.getWidth()/2, this.bound.getHeight()/2));
     }
 
-    private boolean insert(Creature creature) {
+
+    public boolean insert(Creature creature) {
         if(!this.bound.contains(creature.getX(), creature.getY())){
             return false;
         }
