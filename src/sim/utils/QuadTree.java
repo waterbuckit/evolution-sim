@@ -34,7 +34,6 @@ public class QuadTree {
                 this.bound.getWidth()/2, this.bound.getHeight()/2));
     }
 
-
     public boolean insert(Creature creature) {
         if(!this.bound.contains(creature.getX(), creature.getY())){
             return false;
@@ -60,5 +59,27 @@ public class QuadTree {
         return false;
     }
 
+    private ArrayList<Creature> queryRange(Rectangle2D bound) {
+        return query(bound, new ArrayList<Creature>());
+    }
 
+    private ArrayList<Creature> query(Rectangle2D bound, ArrayList<Creature> creatures) {
+        if (!this.bound.intersects(bound)){
+            return creatures;
+        }
+        for(Creature creature : this.containedCreatures){
+            if(bound.contains(creature.getX(), creature.getY()))
+                creatures.add(creature);
+        }
+
+        if (northWest == null)
+            return creatures;
+
+        this.northWest.query(bound, creatures);
+        this.northEast.query(bound, creatures);
+        this.southWest.query(bound, creatures);
+        this.southEast.query(bound, creatures);
+
+        return creatures;
+    }
 }
