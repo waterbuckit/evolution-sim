@@ -16,9 +16,9 @@ public class SimTimer extends AnimationTimer {
 
     @Override
     public void handle(long l) {
-        this.sim.update();
         this.gc.clearRect(0, 0, this.gc.getCanvas().getWidth(),
                 this.gc.getCanvas().getHeight());
+        this.sim.update();
         this.sim.render(this.gc);
     }
 }
