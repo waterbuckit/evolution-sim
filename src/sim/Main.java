@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import sim.components.Simulation;
 import sim.utils.SimTimer;
@@ -18,8 +19,11 @@ public class Main extends Application {
         Group root = new Group();
         Canvas canvas = new Canvas(300, 300);
 
-        Simulation sim = new Simulation(new SimulationParameters(5, canvas));
-        AnimationTimer timer = new SimTimer(canvas.getGraphicsContext2D(), sim);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        Simulation sim = new Simulation(new SimulationParameters(10, canvas),
+                gc);
+        AnimationTimer timer = new SimTimer(gc, sim);
 
         timer.start();
 
